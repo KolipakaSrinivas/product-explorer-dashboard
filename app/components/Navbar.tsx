@@ -9,7 +9,7 @@ import ThemeHelper from "@/app/components/ThemeHelper";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between px-5 md:px-16 py-3 md:py-4">
+    <nav className="flex items-center justify-between px-5 md:px-16 py-3 md:py-2 border-b-2 border-gray-100">
       <div className="flex items-center md:gap-2">
         <ThemeHelper
           darkType={DarkLogo}
