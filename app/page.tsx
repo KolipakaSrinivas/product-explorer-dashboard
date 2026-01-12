@@ -1,5 +1,6 @@
-import ProductsGrid from "./components/ProductsGrid";
+export const dynamic = "force-dynamic";
 
+import ProductsGrid from "./components/ProductsGrid";
 import { Product } from "@/app/types";
 
 async function getProducts(): Promise<Product[]> {
@@ -9,30 +10,11 @@ async function getProducts(): Promise<Product[]> {
     });
 
     if (!res.ok) {
-      console.error("[getProducts] API error:", res.status, res.statusText);
+      console.error("[getProducts] API error:", res.status);
       return [];
     }
 
-    const text = await res.text();
-
-    if (!text) {
-      console.error("[getProducts] Empty response body");
-      return [];
-    }
-
-    try {
-      const products = JSON.parse(text);
-
-      if (!Array.isArray(products)) {
-        console.error("[getProducts] Invalid data shape:", products);
-        return [];
-      }
-
-      return products;
-    } catch (err) {
-      console.error("[getProducts] JSON parse failed:", err, text);
-      return [];
-    }
+    return await res.json();
   } catch (err) {
     console.error("[getProducts] Fetch failed:", err);
     return [];
@@ -41,6 +23,7 @@ async function getProducts(): Promise<Product[]> {
 
 export default async function Home() {
   const products = await getProducts();
+
   return (
     <main>
       <ProductsGrid products={products} />
