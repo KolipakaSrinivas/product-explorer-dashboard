@@ -1,11 +1,18 @@
 @import "tailwindcss";
 
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
 
-/* optional but recommended */
+:root {
+  --bg-color: #F9FAFB;
+  --text-color: #000000;
+}
+
+html.dark {
+  --bg-color: #101828;
+  --text-color: #ffffff;
+}
+
 html,
 body {
-  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }

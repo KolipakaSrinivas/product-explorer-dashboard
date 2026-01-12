@@ -1,15 +1,24 @@
-// import ThemeToggle from "./components/Theme-toggle";
-import ProductCard from "./components/ProductCard";
+import ProductsGrid from "./components/ProductsGrid";
 
-export default function Home() {
+import { Product } from "@/app/types";
+
+async function getProducts(): Promise<Product[]> {
+  const res = await fetch("https://fakestoreapi.com/products", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch products");
+  }
+
+  return res.json();
+}
+
+export default async function Home() {
+  const products = await getProducts();
   return (
-    <main className=" flex flex-wrap gap-5 justify-between  px-16 mt-[10rem]">
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
-        <ProductCard/>
+    <main>
+      <ProductsGrid products={products} />
     </main>
   );
 }

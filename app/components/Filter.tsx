@@ -1,52 +1,87 @@
-export default function Filter() {
+"use client";
+import { useEffect, useState } from "react";
+
+type FilterProps = {
+  search: string;
+  handleSearch: (value: string) => void;
+  category: string;
+  handleCategory: (value: string) => void;
+  sort: string;
+  handleSort: (value: string) => void;
+  setShowFavorites: (value: boolean) => void;
+  showFavorites: boolean;
+};
+
+export default function Filter({
+  search,
+  handleSearch,
+  category,
+  handleCategory,
+  sort,
+  handleSort,
+  setShowFavorites,
+  showFavorites,
+}: FilterProps) {
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function getCategories() {
+      try {
+        const res = await fetch(
+          "https://fakestoreapi.com/products/categories",
+          { cache: "no-store" }
+        );
+        const data: string[] = await res.json();
+        setCategories(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getCategories();
+  }, []);
+
   return (
-    <section
-      className="
-        grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4
-        gap-4
-        px-5 md:px-16
-        py-3 md:py-3
-        border-b-2
-        border-gray-100
-      "
-    >
-      {/* Search */}
-      <input
-        type="text"
-        className="border-b-2 shadow-sm  bg-white p-2 border-gray-200 rounded-xl w-full"
-        placeholder="Search Your Product"
-      />
+    <section className="py-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <input
+          value={search}
+          onChange={(e) => handleSearch(e.target.value)}
+          type="text"
+          placeholder="Search products..."
+          className="w-full rounded-xl border border-gray-300 px-4 py-3"
+        />
 
-      {/* Sort */}
-      <select
-        name="sort"
-        id="sort"
-        className="border-b-2 shadow-sm bg-white p-2 border-gray-200 rounded-xl w-full"
-      >
-        <option value="">Sort by</option>
-        <option value="low-high">Price: Low to High</option>
-        <option value="high-low">Price: High to Low</option>
-        <option value="rating">Rating</option>
-        <option value="newest">Newest</option>
-      </select>
+        <select
+          className="w-full rounded-xl border border-gray-300 px-4 py-3"
+          value={category}
+          onChange={(e) => handleCategory(e.target.value)}
+        >
+          <option value="all">All Categories</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
 
-      {/* Category */}
-      <select
-        name="category"
-        id="category"
-        className="border-b-2 shadow-sm bg-white p-2 border-gray-200 rounded-xl w-full"
-      >
-        <option value="all">All Categories</option>
-        <option value="electronics">Electronics</option>
-        <option value="jewelry">Jewelry</option>
-        <option value="men's clothing">Men's Clothing</option>
-        <option value="women's clothing">Women's Clothing</option>
-      </select>
+        <select
+          value={sort}
+          className="w-full rounded-xl border border-gray-300 px-4 py-3"
+          onChange={(e) => handleSort(e.target.value)}
+        >
+          <option value="">Sort by</option>
+          <option value="low-high">Price: Low → High</option>
+          <option value="high-low">Price: High → Low</option>
+        </select>
 
-      {/* Favorite */}
-      <button className="border-b-2 shadow-sm bg-white p-2 border-gray-200 rounded-xl w-full">
-      ❤️  Favorite
-      </button>
+        <button
+          onClick={() => setShowFavorites((prev) => !prev)}
+          className={`cursor-pointer  rounded-xl border px-4 py-3 font-medium transition 
+          ${showFavorites ? "" : ""}`}
+        >
+          ❤️ Favorites
+        </button>
+      </div>
     </section>
   );
 }

@@ -8,15 +8,18 @@ export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
-
   if (!mounted) return null;
 
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="rounded-md border px-4 py-2 bg-gray-100 dark:bg-gray-800"
+      className="px-4 py-2 rounded-lg  dark:border-white cursor-pointer border-2 "
     >
-      {theme === "dark" ? "🌞 Light" : "🌙 Dark"}
+      {theme === "dark" ? (
+        <span className="text-xl md:text-2xl">🌞</span>
+      ) : (
+        <span className="text-xl md:text-2xl">🌚</span>
+      )}
     </button>
   );
 }
