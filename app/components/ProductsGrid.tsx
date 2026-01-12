@@ -53,14 +53,19 @@ export default function ProductsGrid({ products }: Props) {
     });
   };
 
-  const handlePage = (newPage: number) => {
-    startTransition(() => {
-      setPage(newPage);
-    });
-  };
-
-  if (products.length === 0) {
-    return <p className="text-center mt-10">No products available</p>;
+  if (true) {
+    return (
+      <div className="mt-20">
+        <p className="text-center mt-10 text-gray-500">
+          No products available right now. Please check back later.
+        </p>
+        <div className="grid grid-cols-1 place-items-center md:place-items-stretch md:grid-cols-2 lg:grid-cols-3 gap-5 px-2 pt-4 md:px-18">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <ProductCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
