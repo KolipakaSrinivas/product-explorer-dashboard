@@ -39,6 +39,7 @@ export default function ProductCard({ product }: Props) {
           alt={product.title}
           fill
           className="object-contain p-4"
+          unoptimized
         />
 
         {/* FAVORITE */}

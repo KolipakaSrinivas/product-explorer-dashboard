@@ -68,6 +68,7 @@ export default function Navbar() {
           src={resolvedTheme === "dark" ? RocketLogoDark : RocketLogoLight}
           alt="Logo"
           className="cursor-pointer w-12 h-12 md:w-16 md:h-16"
+          unoptimized
         />
 
         {/* Actions */}
@@ -91,6 +92,7 @@ export default function Navbar() {
               src={resolvedTheme === "dark" ? CartLight : CartDark}
               alt="cart"
               className="w-6 h-6 md:w-7 md:h-7"
+              unoptimized
             />
 
             {/* BADGE */}
@@ -113,6 +115,7 @@ export default function Navbar() {
           </div>
 
           <Image
+          unoptimized
             src={
               resolvedTheme === "dark" ? HamburgerMenuLight : HamburgerMenuDark
             }

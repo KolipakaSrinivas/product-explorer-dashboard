@@ -39,6 +39,7 @@ export default function ProductPage({ product }: Props) {
             ${isDark ? "bg-[#020617]" : "bg-gray-100"}`}
         >
           <Image
+            unoptimized
             src={product.image}
             alt={product.title}
             fill

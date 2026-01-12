@@ -75,9 +75,8 @@ export default function Filter({
         </select>
 
         <button
-          onClick={() => setShowFavorites((prev) => !prev)}
-          className={`cursor-pointer  rounded-xl border px-4 py-3 font-medium transition 
-          ${showFavorites ? "" : ""}`}
+          onClick={() => setShowFavorites(!showFavorites)}
+          className={`cursor-pointer  rounded-xl border px-4 py-3 font-medium transition `}
         >
           ❤️ Favorites
         </button>

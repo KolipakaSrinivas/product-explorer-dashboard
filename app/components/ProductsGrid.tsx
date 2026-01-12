@@ -78,7 +78,7 @@ export default function ProductsGrid({ products }: Props) {
       <div className="grid grid-cols-1 place-items-center md:place-items-stretch md:grid-cols-2 lg:grid-cols-3 gap-5 px-2 pt-4">
         {isPending
           ? Array.from({ length: 8 }).map((_, i) => (
-              <ProductCardSkeleton key={i} isDark={"isDark"} />
+              <ProductCardSkeleton key={i}  />
             ))
           : paginatedItems.map((product) => (
               <ProductCard key={product.id} product={product} />
