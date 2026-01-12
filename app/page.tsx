@@ -8,10 +8,21 @@ async function getProducts(): Promise<Product[]> {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch products");
+    return [];
   }
 
-  return res.json();
+  const text = await res.text();
+
+  if (!text) {
+    return [];
+  }
+
+  try {
+    const products: Product[] = JSON.parse(text);
+    return Array.isArray(products) ? products : [];
+  } catch {
+    return [];
+  }
 }
 
 export default async function Home() {

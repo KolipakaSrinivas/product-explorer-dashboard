@@ -7,25 +7,30 @@ async function getProduct(id: string): Promise<Product> {
     cache: "no-store",
   });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch product");
-  }
+  if (!res.ok) notFound();
 
-  const product = await res.json();
+  const text = await res.text();
+  if (!text) notFound();
 
-  if (!product?.id) {
+  let product: Product;
+
+  try {
+    product = JSON.parse(text);
+  } catch {
     notFound();
   }
+
+  if (!product?.id) notFound();
 
   return product;
 }
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 export default async function Page({ params }: PageProps) {
-  const { id } = await params;
+  const { id } = params;
   const product = await getProduct(id);
 
   return <ProductPage product={product} />;
