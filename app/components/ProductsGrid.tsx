@@ -53,7 +53,7 @@ export default function ProductsGrid({ products }: Props) {
     });
   };
 
-  if (true) {
+  if (products.length == 0) {
     return (
       <div className="mt-20">
         <p className="text-center mt-10 text-gray-500">
