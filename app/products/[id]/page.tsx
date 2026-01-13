@@ -10,15 +10,13 @@ export default function Page() {
   const router = useRouter();
 
   const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getProduct() {
       try {
-        const res = await fetch(
-          `https://fakestoreapi.com/products/${id}`,
-          { cache: "no-store" }
-        );
+        const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+          cache: "no-store",
+        });
 
         if (!res.ok) {
           console.error("HTTP error:", res.status);
@@ -32,16 +30,11 @@ export default function Page() {
         console.error("getProduct error:", err);
         router.push("/404");
       } finally {
-        setLoading(false);
       }
     }
 
     if (id) getProduct();
   }, [id, router]);
-
-  if (loading) {
-    return <p className="mt-20 text-center">Loading product…</p>;
-  }
 
   if (!product) {
     return null; // redirect already triggered

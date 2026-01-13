@@ -1,4 +1,5 @@
 "use client";
+import { useApp } from "@/app/providers/AppContext";
 import { useState, useMemo } from "react";
 import { Product } from "@/app/types";
 
@@ -6,6 +7,8 @@ export function useProductFilters(products: Product[]) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("");
+  const [showFavorites, setShowFavorites] = useState(false);
+  const { favorites } = useApp();
 
   /* FILTER */
   const filteredProducts = useMemo(() => {
@@ -14,9 +17,11 @@ export function useProductFilters(products: Product[]) {
 
       const matchCategory = category === "all" || p.category === category;
 
-      return matchSearch && matchCategory;
+      const matchFavorites = !showFavorites || favorites.includes(p.id);
+
+      return matchSearch && matchCategory && matchFavorites;
     });
-  }, [products, search, category]);
+  }, [products, search, category, showFavorites, favorites]);
 
   /* SORT */
   const sortedProducts = useMemo(() => {
@@ -37,5 +42,7 @@ export function useProductFilters(products: Product[]) {
     setCategory,
     sort,
     setSort,
+    showFavorites,
+    setShowFavorites,
   };
 }

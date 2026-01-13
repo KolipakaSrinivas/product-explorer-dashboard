@@ -15,7 +15,6 @@ import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
 
 export default function ProductsGrid({ products }: Props) {
-  const [showFavorites, setShowFavorites] = useState(false);
   const [isPending, startTransition] = useTransition();
   const {
     products: filteredProducts,
@@ -25,6 +24,8 @@ export default function ProductsGrid({ products }: Props) {
     setCategory,
     sort,
     setSort,
+    showFavorites,
+    setShowFavorites,
   } = useProductFilters(products);
 
   const { paginatedItems, page, setPage, totalPages } = usePagination(
@@ -52,21 +53,6 @@ export default function ProductsGrid({ products }: Props) {
       setSort(value);
     });
   };
-
-  // if (products.length == 0) {
-  //   return (
-  //     <div className="mt-20">
-  //       <p className="text-center mt-10 text-gray-500">
-  //         No products available right now. Please check back later.
-  //       </p>
-  //       <div className="grid grid-cols-1 place-items-center md:place-items-stretch md:grid-cols-2 lg:grid-cols-3 gap-5 px-2 pt-4 md:px-18">
-  //         {Array.from({ length: 3 }).map((_, i) => (
-  //           <ProductCardSkeleton key={i} />
-  //         ))}
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <section className="mt-18 px-5 md:px-20 py-3">
