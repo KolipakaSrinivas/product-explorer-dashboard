@@ -1,6 +1,9 @@
+export const dynamic = "force-dynamic";
+
 import { notFound } from "next/navigation";
 import ProductPage from "../ProductPage";
-import { Product } from "@/app/types";
+// import { Product } from "@/app/types";
+
 
 export async function getProduct(id: string) {
   try {
@@ -10,15 +13,21 @@ export async function getProduct(id: string) {
     );
 
     if (!res.ok) {
-      console.error("Fetch failed:", res.status, res.statusText);
+      console.error("HTTP error:", res.status);
       notFound();
     }
 
-    const product = (await res.json()) as Product;
+    const text = await res.text();
+    if (!text.trim()) {
+      console.error("Empty response body");
+      notFound();
+    }
+
+    const product = JSON.parse(text);
 
     return product;
-  } catch (error) {
-    console.error("getProduct error:", error);
+  } catch (err) {
+    console.error("Server fetch failed:", err);
     notFound();
   }
 }
