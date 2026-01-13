@@ -2,27 +2,25 @@ import { notFound } from "next/navigation";
 import ProductPage from "../ProductPage";
 import { Product } from "@/app/types";
 
-async function getProduct(id: string): Promise<Product> {
-  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) notFound();
-
-  const text = await res.text();
-  if (!text) notFound();
-
-  let product: Product;
-
+export async function getProduct(id: string) {
   try {
-    product = JSON.parse(text);
-  } catch {
+    const res = await fetch(
+      `https://fakestoreapi.com/products/${id}`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) {
+      console.error("Fetch failed:", res.status, res.statusText);
+      notFound();
+    }
+
+    const product = (await res.json()) as Product;
+
+    return product;
+  } catch (error) {
+    console.error("getProduct error:", error);
     notFound();
   }
-
-  if (!product?.id) notFound();
-
-  return product;
 }
 
 interface PageProps {
@@ -30,7 +28,7 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  const { id } = params;
+   const { id } = await params;
   const product = await getProduct(id);
 
   return <ProductPage product={product} />;
