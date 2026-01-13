@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center">
@@ -6,12 +7,12 @@ export default function NotFound() {
         The product you’re looking for doesn’t exist.
       </p>
 
-      <a
+      <Link
         href="/products"
         className="mt-6 rounded-lg bg-black px-6 py-3 text-white"
       >
         Back to products
-      </a>
+      </Link>
     </div>
   );
 }

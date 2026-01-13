@@ -49,7 +49,7 @@ export default function ProductPage({ product }: Props) {
 
           <button
             onClick={() => toggleFavorite(product.id)}
-            className={`absolute top-4 right-4 h-12 w-12 rounded-full
+            className={`cursor-pointer absolute top-4 right-4 h-12 w-12 rounded-full
               flex items-center justify-center backdrop-blur
               transition hover:scale-110 active:scale-95
               ${isDark ? "bg-white/10 text-red-400" : "bg-white shadow-md"}`}
@@ -86,7 +86,7 @@ export default function ProductPage({ product }: Props) {
       transition active:scale-95
       ${
         isDark
-          ? "bg-indigo-600 hover:bg-indigo-500 text-white"
+          ? "bg-black hover:bg-gray-600 text-white"
           : "bg-black hover:bg-gray-800 text-white"
       }`}
             >

@@ -4,7 +4,7 @@ import { useProductFilters } from "../customhooks/useProductFilters";
 import { usePagination } from "../customhooks/usePagination";
 import { ProductCardSkeleton } from "@/app/loading/ProductCardSkeleton";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 
 interface Props {
   products: Product[];

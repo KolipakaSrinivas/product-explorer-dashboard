@@ -2,6 +2,7 @@
 import { useTheme } from "next-themes";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 //toggle theme
 import ThemeToggle from "./ThemeToggle";
@@ -64,12 +65,14 @@ export default function Navbar() {
     >
       <div className="flex justify-between md:px-20 py-1.5">
         {/* Logo */}
-        <Image
-          src={resolvedTheme === "dark" ? RocketLogoDark : RocketLogoLight}
-          alt="Logo"
-          className="cursor-pointer w-12 h-12 md:w-16 md:h-16"
-          unoptimized
-        />
+        <Link href={"/"}>
+          <Image
+            src={resolvedTheme === "dark" ? RocketLogoDark : RocketLogoLight}
+            alt="Logo"
+            className="cursor-pointer w-12 h-12 md:w-16 md:h-16"
+            unoptimized
+          />
+        </Link>
 
         {/* Actions */}
         <div className="flex items-center gap-3 md:gap-4">
@@ -115,7 +118,7 @@ export default function Navbar() {
           </div>
 
           <Image
-          unoptimized
+            unoptimized
             src={
               resolvedTheme === "dark" ? HamburgerMenuLight : HamburgerMenuDark
             }

@@ -17,7 +17,7 @@ export default function Pagination({
       <button
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="rounded-xl border px-4 py-2 text-sm disabled:opacity-40"
+        className="rounded-xl border px-4 text-gray-700  py-2 text-sm disabled:opacity-40"
       >
         ← Prev
       </button>
@@ -31,7 +31,7 @@ export default function Pagination({
             className={`rounded-xl cursor-pointer px-4 py-2 text-sm border transition
               ${
                 currentPage === page
-                  ? "bg-black text-white"
+                  ? "bg-[#1E2939] text-white"
                   : "bg-white hover:bg-gray-100"
               }`}
           >
