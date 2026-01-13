@@ -2,35 +2,33 @@ export const dynamic = "force-dynamic";
 
 import { notFound } from "next/navigation";
 import ProductPage from "../ProductPage";
-// import { Product } from "@/app/types";
+import { Product } from "@/app/types";
 
 
-export async function getProduct(id: string) {
+export async function getProduct(id: string): Promise<Product | null> {
   try {
     const res = await fetch(
       `https://fakestoreapi.com/products/${id}`,
-      { cache: "no-store" }
+      {
+        cache: "no-store",
+        headers: {
+          "User-Agent": "Mozilla/5.0",
+        },
+      }
     );
 
     if (!res.ok) {
       console.error("HTTP error:", res.status);
-      notFound();
+      return null;
     }
 
-    const text = await res.text();
-    if (!text.trim()) {
-      console.error("Empty response body");
-      notFound();
-    }
-
-    const product = JSON.parse(text);
-
-    return product;
+    return (await res.json()) as Product;
   } catch (err) {
-    console.error("Server fetch failed:", err);
-    notFound();
+    console.error("getProduct error:", err);
+    return null;
   }
 }
+
 
 interface PageProps {
   params: { id: string };
