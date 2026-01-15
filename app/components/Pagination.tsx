@@ -1,4 +1,6 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 type PaginationProps = {
   currentPage: number;
@@ -11,6 +13,11 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
   return (
     <div className="flex items-center justify-center gap-2 py-6 cursor-pointer">
       {/* Prev */}
@@ -28,11 +35,13 @@ export default function Pagination({
           <button
             key={page}
             onClick={() => onPageChange(page)}
-            className={`rounded-xl cursor-pointer px-4 py-2 text-sm border transition
+            className={`rounded-xl  cursor-pointer px-4 py-2 text-sm border transition
               ${
                 currentPage === page
-                  ? "bg-[#1E2939] text-white"
-                  : "bg-white hover:bg-gray-100"
+                  ? "bg-[#1E2939]  text-white"
+                  : `${
+                      resolvedTheme == "dark" ? "dark:bg-gray-800" : ""
+                    } hover:bg-gray-400 text-black`
               }`}
           >
             {page}
@@ -49,7 +58,7 @@ export default function Pagination({
       <button
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="cursor-pointer rounded-xl border px-4 py-2 text-sm disabled:opacity-40"
+        className="cursor-pointer  rounded-xl border px-4 py-2 text-sm disabled:opacity-40"
       >
         Next →
       </button>
